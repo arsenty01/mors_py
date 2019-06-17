@@ -1,0 +1,80 @@
+<div id="content-body">
+     <div id="content-body-1line">
+        <div id="time-table">
+
+            {% if schedule %}
+
+            <div id="tt-header">
+                <h2>расписание эфира</h2>
+            </div>
+            <div id="tt-body">
+
+                {% for program in schedule %}
+
+                <div class="schedule">
+                    <div class="time">
+                        {{ program.time }}
+                    </div>
+                    <div class="details">
+                        <div class="program">
+                            {{ program.name }}
+                        </div>
+                        <div class="guests">
+                            {{ program.guest }}
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+            </div>
+            {% else %}
+
+            <h3>Расписание не загружено!</h3>
+
+            {% endif %}
+        </div>
+        <div id="vk-chat">
+            <div id="cr-header">
+                <h2>чат</h2>
+            </div>
+            <div id="cr-body">
+                <div class="messages">
+                    <div class="message">
+                        <div class="author">John Snow</div>
+                        <div class="time">03.05 14:44:34</div>
+                        Привет, морсианин!
+                    </div>
+                    <div class="message">
+                        <div class="author">John Snow</div>
+                        <div class="time">03.05 14:44:34</div>
+                        Привет, морсианин!
+                    </div>
+                </div>
+                <div class="form">
+                    <form>
+                        <input class="name" type="text" placeholder="Имя"/>
+                        <input class="msg" type="text" placeholder="Сообщение"/>
+                        <input class="send" type="submit"/>
+                    </form>
+                </div>
+            </div>
+        </div>
+     </div>
+     <div id="news-header"><h2>новости</h2></div>
+     <div id="content-body-rest">
+         {% if news %}
+             {% for item in news %}
+                <div class="news-item">
+                    <img src="{{ url_for('static', filename='img/news/'+item.img) }}" alt=""/>
+                    <div class="news-title"><h3>{{ item.title }}</h3></div>
+                    <div class="news-article">
+                        {{ item.shortcut }}
+                    </div>
+                </div>
+             {% endfor %}
+         {% else %}
+         <h3>А нет новостей-то!</h3>
+         {% endif %}
+     </div>
+ </div>

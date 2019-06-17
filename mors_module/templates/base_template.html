@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Радио "Морс" - Слушай маму и Морс!</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}"/>
+    <script src="{{url_for('static', filename='js/lib/jquery-3.4.1.min.js')}}"></script>
+</head>
+<body>
+    <div id="main-wrapper">
+        {% block content %}
+        {% endblock %}
+        <div class="spacer"></div>
+        <div id="content-footer">
+            <div id="copyright">Все права защищены. Молодежная радиостанция "Морс" &copy; 2019 г. ver.{{ version }}</div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,1 @@
+from mors_module import app
