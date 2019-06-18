@@ -7,12 +7,12 @@ html, body {
     font-weight: lighter;
 }
 #main-wrapper {
-    display: flexbox;
+    display: flex;
     flex-direction: column;
 }
 #content-head {
     width: 100%;
-    display: flexbox;
+    display: flex;
     flex-direction: column;
 }
 #content-head-1line {
