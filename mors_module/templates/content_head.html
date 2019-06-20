@@ -32,6 +32,10 @@
          <div id="player-label">
              У нас в эфире:
          </div>
+         <audio id="radio">
+             Your browser does not support the <code>audio</code> element.
+             <source src="http://s0.radioheart.ru:8000/RH2357" type="audio/wav">
+         </audio>
          <div id="player-on-air">
              {{ current_program.name }}
         </div>
@@ -39,8 +43,7 @@
             {{ current_program.time }}
         </div>
         <div id="player-controls">
-            <button class="main-button">слушать эфир</button>
-            <button class="main-button">к архиву записей</button>
+            <button class="main-button play">слушать эфир</button>
         </div>
      </div>
  </div>

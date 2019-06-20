@@ -1,11 +1,21 @@
 from mors_module import db
 
 
-class User(db.Model):
+class Users(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    username = db.Column(db.String(64), index=True, unique=True)
+    name = db.Column(db.String(64), index=True, unique=True)
     email = db.Column(db.String(120), index=True, unique=True)
-    password_hash = db.Column(db.String(128))
+    password = db.Column(db.String(128))
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
+
+
+class Chat_messages(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    author = db.Column(db.String(64), index=True)
+    text = db.Column(db.String(280))
+    timestamp = db.Column(db.DateTime)
+
+    def __repr__(self):
+        return '<Message {0} from {1}>'.format(self.id, self.author)

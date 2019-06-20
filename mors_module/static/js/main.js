@@ -1,58 +1,38 @@
-'use strict'
+$(document).ready(function ($) {
+    let radioStatus = false;
+    let radioSound = false;
+    let curVolume = 0.5;
 
-
-var mountpoint = "/RH2357";
-var mountpoint2 = "/nonstop";//нонстоп
-var nac = true;
-var counter=0;
-var url = "http://s0.radioheart.ru:8000/json_new.xsl?"; //наш url к json в папке Web
-var url2 = url;
-url+= "mount=" + mountpoint + "&callback=";
-url2+="mount=" + mountpoint2 + "&callback=";
-
-function parseMusic(results)
-{
-    for  (var n in results){
-        var nm = results[n];
-        if(nm["title"] && nac){
-            nac = false;
-            $('#stream_name').text('Название станции: '+nm["name"]);
-            $('#stream_description').text('Описание станции: '+nm["description"]);
-            $('#stream_song').text('Сейчас в эфире: '+nm["title"]);
-            $('#stream_listenters').text('Слушателей: '+nm["listeners"]);
+    $('.play').click({}, function () {
+        if(radioStatus) {
+            document.getElementById('radio').pause();
+            $('.play').text('Слушать эфир');
+            radioStatus = false;
+        } else {
+            document.getElementById('radio').play();
+            document.getElementById('radio').volume = curVolume;
+            $('.play').text('Пауза');
+            radioStatus = true;
         }
-    }
-}
-var span;
-var script;
-$.ajaxSetup({ scriptCharset: "utf-8" , contentType: "application/json; charset=utf-8"});
-function initMusic()
-{
-    span = document.createElement("span");
-    span.id="getscript";
-    document.body.appendChild(span);
-    script  = document.createElement("script");
-    script.type="text/javascript";
-    script.charset="UTF-8";
-}
-function addMusic()
-{
-    nac = true;
-    $('#getscript').empty();
-    script.src = url + counter;
-    $('#getscript').append(script);
-    script.src = url2 + counter;
-    $('#getscript').append(script);
-}
-function updateMusic()
-{
-    counter=counter+1;
-    addMusic();
-}
-
-$(document).ready(
-    function () {
-        initMusic();
-        addMusic();
-        setInterval('updateMusic()', 30000 );
     });
+
+
+    /*  */
+    let socket = io.connect('http://' + document.domain + ':' + location.port + '/');
+    socket.on('messages_list', function (messages) {
+        console.log(messages);
+        $('#cr-body').empty();
+        messages = messages.messages;
+        for (let i = messages.length-1; i >= 0; i--) {
+            $('#cr-body').append(
+                '<div class="message"><div class="author">'+messages[i]['author']+'</div><div class="time">'+messages[i]['timestamp']+'</div>'+messages[i]['text']+'</div>'
+            )
+        }
+        $('#cr-body').scrollTop($('#cr-body')[0].scrollHeight)
+    });
+    $('#chat').submit(function(event) {
+        socket.emit('sent_message', {text: $('.msg').val(), author: $('.name').val()});
+        return false;
+    });
+
+});

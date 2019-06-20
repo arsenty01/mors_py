@@ -141,6 +141,11 @@ h2 {
     color: #707070;
 }
 
+#cr-body {
+    height: 400px;
+    width: 100%;
+    overflow: scroll;
+}
 .messages {
     display: flex;
     flex-direction: column-reverse;

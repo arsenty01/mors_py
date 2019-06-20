@@ -5,6 +5,65 @@
     <title>Радио "Морс" - Слушай маму и Морс!</title>
     <link rel="stylesheet" href="{{url_for('static', filename='css/main.css')}}"/>
     <script src="{{url_for('static', filename='js/lib/jquery-3.4.1.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/main.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <script>
+        var mountpoint = "/RH2357";
+        var mountpoint2 = "/nonstop";//нонстоп
+        var nac = true;
+        var counter=0;
+        var url = "http://s0.radioheart.ru:8000/json_new.xsl?"; //наш url к json в папке Web
+        var url2 = url;
+        url+= "mount=" + mountpoint + "&callback=";
+        url2+="mount=" + mountpoint2 + "&callback=";
+
+        function parseMusic(results)
+        {
+            for  (var n in results){
+                var nm = results[n];
+                if(nm["title"] && nac){
+                    nac = false;
+                    $('#stream_name').text('Название станции: '+nm["name"]);
+                    $('#stream_description').text('Описание станции: '+nm["description"]);
+                    $('#stream_song').text('Сейчас в эфире: '+nm["title"]);
+                    $('#stream_listenters').text('Слушателей: '+nm["listeners"]);
+                }
+            }
+        }
+        var span;
+        var script;
+        $.ajaxSetup({ scriptCharset: "utf-8" , contentType: "application/json; charset=utf-8"});
+        function initMusic()
+        {
+            span = document.createElement("span");
+            span.id="getscript";
+            document.body.appendChild(span);
+            script  = document.createElement("script");
+            script.type="text/javascript";
+            script.charset="UTF-8";
+        }
+        function addMusic()
+        {
+            nac = true;
+            $('#getscript').empty();
+            script.src = url + counter;
+            $('#getscript').append(script);
+            script.src = url2 + counter;
+            $('#getscript').append(script);
+        }
+        function updateMusic()
+        {
+            counter=counter+1;
+            addMusic();
+        }
+
+        $(document).ready(
+                function () {
+                    initMusic();
+                    addMusic();
+                    setInterval('updateMusic()', 30000 );
+                });
+    </script>
 </head>
 <body>
     <div id="main-wrapper">
