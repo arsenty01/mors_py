@@ -39,23 +39,20 @@
                 <h2>чат</h2>
             </div>
             <div id="cr-body">
-                <div class="messages">
-                    <div class="message">
-                        <div class="author">John Snow</div>
-                        <div class="time">03.05 14:44:34</div>
-                        Привет, морсианин!
-                    </div>
-                    <div class="message">
-                        <div class="author">John Snow</div>
-                        <div class="time">03.05 14:44:34</div>
-                        Привет, морсианин!
-                    </div>
-                </div>
+                {% if chat_messages %}
+                    {% for msg in chat_messages|reverse %}
+                        <div class="message">
+                            <div class="author">{{msg.author}}</div>
+                            <div class="time">{{msg.timestamp.strftime("%d.%m.%Y, %H:%M:%S")}}</div>
+                            {{msg.text}}
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
             <div class="form" id="chat">
                 <form>
-                    <input class="name" type="text" placeholder="Имя"/>
-                    <input class="msg" type="text" placeholder="Сообщение"/>
+                    <input class="name" type="text" placeholder="Имя" pattern="^[А-яA-z0-9\-_ !,.:+=?)(]*$" required/>
+                    <input class="msg" type="text" placeholder="Сообщение" pattern="^[А-яA-z0-9\-_ !,.:+=?)(]*$" required/>
                     <input class="send" type="submit"/>
                 </form>
             </div>

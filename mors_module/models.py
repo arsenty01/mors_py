@@ -19,3 +19,14 @@ class Chat_messages(db.Model):
 
     def __repr__(self):
         return '<Message {0} from {1}>'.format(self.id, self.author)
+
+
+class Schedule(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    start_time = db.Column(db.DateTime)
+    end_time = db.Column(db.DateTime)
+    title = db.Column(db.String(140), index=True)
+    guests = db.Column(db.String(240), index=True)
+
+    def __repr__(self):
+        return '<Schedule for {}>'.format(self.title)

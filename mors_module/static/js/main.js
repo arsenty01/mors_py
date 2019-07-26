@@ -1,4 +1,5 @@
 $(document).ready(function ($) {
+    $('#cr-body').scrollTop($('#cr-body')[0].scrollHeight)
     let radioStatus = false;
     let radioSound = false;
     let curVolume = 0.5;
@@ -30,8 +31,18 @@ $(document).ready(function ($) {
         }
         $('#cr-body').scrollTop($('#cr-body')[0].scrollHeight)
     });
+    socket.on('new_message', function (message) {
+        console.log(message);
+        $('#cr-body').append(
+            '<div class="message"><div class="author">'+message['author']+'</div><div class="time">'+message['timestamp']+'</div>'+message['text']+'</div>'
+        )
+        $('#cr-body').scrollTop($('#cr-body')[0].scrollHeight)
+    });
     $('#chat').submit(function(event) {
-        socket.emit('sent_message', {text: $('.msg').val(), author: $('.name').val()});
+        if (($('.msg').val() != '') & ($('.name').val() != '')) {
+            socket.emit('sent_message', {text: $('.msg').val(), author: $('.name').val()});
+            $('.msg').val('');
+        }
         return false;
     });
 

@@ -198,7 +198,7 @@ input[type="text"] {
     border: #303030 solid 2px;
     border-radius: 10px;
     padding: 5px;
-    height: 25px;
+    height: 35px;
     outline: none;
 }
 input[type="text"]:focus {
@@ -211,13 +211,14 @@ input[type="text"]::placeholder {
     width: 40%;
 }
 input[type=submit] {
-    height: 40px;
+    height: 35px;
     background-color: #181A1D;
     color: azure;
     border: #303030 solid 2px;
     border-radius: 10px;
     padding: 5px;
     cursor: pointer;
+    outline: none;
 }
 input[type=submit]:hover {
     background-color: rgb(197, 19, 43);
