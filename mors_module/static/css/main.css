@@ -126,6 +126,11 @@ h2 {
     justify-content: space-between;
     margin-bottom: 15px;
 }
+.special_date {
+    font-size: 12px !important;
+    color: grey !important;
+    float:right !important;
+}
 .details {
     max-width: 60%;
     text-align: left;
@@ -140,29 +145,24 @@ h2 {
     font-size: 10px;
     color: #707070;
 }
-
 #cr-body {
-    height: 400px;
-    width: 100%;
-    overflow: scroll;
-}
-.messages {
     display: flex;
     flex-direction: column-reverse;
     height: 400px;
     overflow-x: hidden;
     overflow-y: scroll;
+    padding: 0 5px;
 }
-.messages::-webkit-scrollbar {
+#cr-body::-webkit-scrollbar {
     width: 2px;
 }
 
-.messages::-webkit-scrollbar-track {
+#cr-body::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 6px rgba(197, 19, 43, 0); 
     border-radius: 10px;
 }
 
-.messages::-webkit-scrollbar-thumb {
+#cr-body::-webkit-scrollbar-thumb {
     border-radius: 10px;
     background-color: rgb(197, 19, 43);
 }
@@ -211,7 +211,7 @@ input[type="text"]::placeholder {
     width: 40%;
 }
 input[type=submit] {
-    height: 35px;
+    height: 50px;
     background-color: #181A1D;
     color: azure;
     border: #303030 solid 2px;

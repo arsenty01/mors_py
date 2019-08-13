@@ -33,7 +33,7 @@ $(document).ready(function ($) {
     });
     socket.on('new_message', function (message) {
         console.log(message);
-        $('#cr-body').append(
+        $('#cr-body').prepend(
             '<div class="message"><div class="author">'+message['author']+'</div><div class="time">'+message['timestamp']+'</div>'+message['text']+'</div>'
         )
         $('#cr-body').scrollTop($('#cr-body')[0].scrollHeight)

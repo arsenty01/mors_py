@@ -5,7 +5,7 @@
             {% if schedule %}
 
             <div id="tt-header">
-                <h2>расписание эфира</h2>
+                <h2>эфир <span class="special_date">{{ schedule_date }}</span></h2>
             </div>
             <div id="tt-body">
 
@@ -40,7 +40,7 @@
             </div>
             <div id="cr-body">
                 {% if chat_messages %}
-                    {% for msg in chat_messages|reverse %}
+                    {% for msg in chat_messages %}
                         <div class="message">
                             <div class="author">{{msg.author}}</div>
                             <div class="time">{{msg.timestamp.strftime("%d.%m.%Y, %H:%M:%S")}}</div>
