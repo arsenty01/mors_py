@@ -1,4 +1,4 @@
-var mountpoint = "/RH2357";
+var mountpoint = "/RH20499";
 var mountpoint2 = "/nonstop";//нонстоп
 var nac = true;
 var counter=0;

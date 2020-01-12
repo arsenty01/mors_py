@@ -24,7 +24,7 @@ class Chat_messages(db.Model):
 class Schedule(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     date = db.Column(db.DateTime)
-    id_broadcast = db.Column(db.Integer, db.ForegnKey('broadcast.id'))
+    #id_broadcast = db.Column(db.Integer, db.ForegnKey('broadcast.id'))
     start_time = db.Column(db.DateTime)
     end_time = db.Column(db.DateTime)
     title = db.Column(db.String(140), index=True)
@@ -39,4 +39,4 @@ class Broadcast(db.Model):
     date = db.Column(db.DateTime)
     number = db.Column(db.Integer)
     name = db.Column(db.String(140))
-    programs = db.relationship('Schedule', backref='broadcast', dynamic='lazy')
+    #programs = db.relationship('Schedule', backref='broadcast', dynamic='lazy')

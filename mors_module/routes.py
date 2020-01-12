@@ -3,7 +3,6 @@ from mors_module.models import Chat_messages
 from flask import render_template
 from flask_socketio import SocketIO, emit
 from datetime import datetime
-
 socketio = SocketIO(app)
 
 
@@ -26,8 +25,8 @@ def index():
     }]
 
     current_program = {
-        "name": "Тестовая передача",
-        "time": "12:00 - 13:00"
+        "name": "Просто музыка",
+        "time": "до следующего эфира"
     }
 
     menu_items = [
@@ -45,7 +44,7 @@ def index():
                            schedule=schedule,
                            schedule_date=schedule_date,
                            news=news,
-                           version='19.81 (inside)',
+                           version='20.11 (alpha)',
                            current_program=current_program,
                            chat_messages=chat_messages)
 

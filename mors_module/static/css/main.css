@@ -76,6 +76,7 @@ html, body {
 #player-timing {
     font-size: 16px;
     padding: 5px;
+    margin-bottom: 5px;
 }
 #player-on-air {
     padding: 5px;
