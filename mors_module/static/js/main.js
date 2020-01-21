@@ -1,49 +1,79 @@
 $(document).ready(function ($) {
-    $('#cr-body').scrollTop($('#cr-body')[0].scrollHeight)
+    //Variables
+    let socket = io.connect('http://' + document.domain + ':' + location.port + '/');
     let radioStatus = false;
     let radioSound = false;
-    let curVolume = 0.5;
+    let curVolume = 1;
 
-    $('.play').click({}, function () {
+    //Elements
+    let chat = $('#cr-body');
+    let form = $('#chat');
+    let body = $('body');
+
+    //Buttons
+    let play = $('.play');
+    let login_btn = $('#login-btn');
+
+    //Fields
+    let author = $('.name');
+    let message = $('.msg');
+
+    function reset_chat_scroll() {
+        chat.scrollTop(chat[0].scrollHeight);
+    }
+
+    reset_chat_scroll();
+
+    //Actions
+
+    form.submit(function(event) {
+        if ((message.val() !== '') && (author.val() !== '')) {
+            socket.emit('sent_message', {
+                text: message.val(),
+                author: author.val()
+            });
+
+            message.val('');
+        }
+        return false;
+    });
+
+    play.click({}, function () {
         if(radioStatus) {
             document.getElementById('radio').pause();
-            $('.play').text('Слушать эфир');
+            play.text('Слушать эфир');
             radioStatus = false;
         } else {
             document.getElementById('radio').play();
             document.getElementById('radio').volume = curVolume;
-            $('.play').text('Пауза');
+            play.text('Пауза');
             radioStatus = true;
         }
     });
 
+    login_btn.click({}, function () {
 
-    /*  */
-    let socket = io.connect('http://' + document.domain + ':' + location.port + '/');
+    });
+
+    //Listeners
     socket.on('messages_list', function (messages) {
         console.log(messages);
-        $('#cr-body').empty();
+        chat.empty();
         messages = messages.messages;
         for (let i = messages.length-1; i >= 0; i--) {
-            $('#cr-body').append(
+            chat.append(
                 '<div class="message"><div class="author">'+messages[i]['author']+'</div><div class="time">'+messages[i]['timestamp']+'</div>'+messages[i]['text']+'</div>'
             )
         }
-        $('#cr-body').scrollTop($('#cr-body')[0].scrollHeight)
+        chat.scrollTop(chat[0].scrollHeight)
     });
+
     socket.on('new_message', function (message) {
         console.log(message);
-        $('#cr-body').prepend(
+        chat.prepend(
             '<div class="message"><div class="author">'+message['author']+'</div><div class="time">'+message['timestamp']+'</div>'+message['text']+'</div>'
-        )
-        $('#cr-body').scrollTop($('#cr-body')[0].scrollHeight)
-    });
-    $('#chat').submit(function(event) {
-        if (($('.msg').val() != '') & ($('.name').val() != '')) {
-            socket.emit('sent_message', {text: $('.msg').val(), author: $('.name').val()});
-            $('.msg').val('');
-        }
-        return false;
+        );
+        reset_chat_scroll();
     });
 
 });

@@ -5,7 +5,13 @@
             {% if schedule %}
 
             <div id="tt-header">
-                <h2>эфир <span class="special_date">{{ schedule_date }}</span></h2>
+                <h2>эфир
+                    <span class="special_date">
+                        <select>
+                            <option>{{ schedule_date }}</option>
+                        </select>
+                    </span>
+                </h2>
             </div>
             <div id="tt-body">
 
