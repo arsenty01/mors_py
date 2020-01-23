@@ -73,7 +73,45 @@ def index():
 @app.route('/super-secret-admin')
 def admin():
     chat_messages = Chat_messages.query.order_by(Chat_messages.id.desc()).limit(100)
-    return render_template('admin.html', chat_messages=chat_messages)
+
+    schedule = [
+        {
+            "time": "12:00 - 12:50",
+            "name": "Новости",
+            "guest": "Андрей Шарыгин и Дима Яснов"
+        }, {
+            "time": "12:55 - 13:10",
+            "name": "Гороскоп",
+            "guest": "Яна Смолина"
+        }, {
+            "time": "13:15 - 14:15",
+            "name": "В тренде",
+            "guest": "Максим Поправко и Руслан Нагатов"
+        }, {
+            "time": "14:20 - 15:00",
+            "name": "Звук Жив",
+            "guest": "HARDBALLS"
+        }, {
+            "time": "15:05 - 15:40",
+            "name": "Спорт",
+            "guest": "Андрей Галкин и Flying disk"
+        }, {
+            "time": "15:45 - 16:20",
+            "name": "В гостях",
+            "guest": "проект 'Лёд для всех'"
+        }
+    ]
+
+    broadcasts = [
+        "26.01.2020"
+    ]
+
+    return render_template('admin.html',
+                           chat_messages=chat_messages,
+                           deletion=True,
+                           version='20.11 (alpha)',
+                           schedule=schedule,
+                           broadcasts=broadcasts)
 
 @socketio.on('sent_message')
 def get_messages(message):

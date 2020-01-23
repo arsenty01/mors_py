@@ -20,15 +20,67 @@
             {% if chat_messages %}
                 {% for msg in chat_messages %}
                     <div class="message">
-                        <div class="author">{{msg.author}}</div>
-                            <div class="time">{{msg.timestamp.strftime("%d.%m.%Y, %H:%M:%S")}}</div>
+                        <div class="author" id="{{msg.id}}">{{msg.author}}</div>
+                            <div class="time">
+                                {{msg.timestamp.strftime("%d.%m.%Y, %H:%M:%S")}}
+                                <button class="main-button btn-red btn-delete">Удалить</button>
+                            </div>
                                 {{msg.text}}
                     </div>
                 {% endfor %}
             {% endif %}
         </div>
     </div>
-    <div class="schedule_admin"></div>
+    <div class="schedule_admin">
+        <div id="time-table" class="time-table-admin">
+
+            {% if schedule %}
+
+            <div id="tt-header">
+                <h2>эфир
+                    <span class="special_date">
+                        <select>
+                            {% for broadcast in broadcasts %}
+                                <option>{{ broadcast }}</option>
+                            {% endfor %}
+                        </select>
+                    </span>
+                </h2>
+            </div>
+            <div id="tt-body">
+
+                {% for program in schedule %}
+
+                <div class="schedule">
+                    <div class="time">
+                        {{ program.time }}
+                    </div>
+                    <div class="details">
+                        <div class="program">
+                            {{ program.name }}
+                        </div>
+                        <div class="guests">
+                            {{ program.guest }}
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+            </div>
+            {% else %}
+
+            <h3>Расписание не загружено!</h3>
+
+            {% endif %}
+            <form>
+                <input type="text" name="time" placeholder="Время" pattern="^[А-яA-z0-9\-_ !,.:+=?)(]*$" required/>
+                <input type="text" name="name" placeholder="Название" pattern="^[А-яA-z0-9\-_ !,.:+=?)(]*$" required/>
+                <input type="text" name="hosts" placeholder="Ведущие" pattern="^[А-яA-z0-9\-_ !,.:+=?)(]*$" required/>
+                <input class="send" type="submit" />
+            </form>
+        </div>
+    </div>
 </div>
 
 {% endblock %}
