@@ -10,8 +10,6 @@ socketio = SocketIO(app)
 @app.route('/index')
 def index():
 
-    schedule_date = "26.01.2020"
-
     schedule = [
         {
             "time": "12:00 - 12:50",
@@ -56,25 +54,26 @@ def index():
     ]
 
     broadcasts = [
-
+        "26.01.2020"
     ]
 
     chat_messages = Chat_messages.query.order_by(Chat_messages.id.desc()).limit(20)
     # db.session.execute('''DELETE FROM chat_messages''')
     # db.session.commit()
 
-    return render_template('base_template.html',
+    return render_template('main_page.html',
                            schedule=schedule,
-                           schedule_date=schedule_date,
                            news=news,
+                           broadcasts=broadcasts,
                            version='20.11 (alpha)',
                            current_program=current_program,
                            chat_messages=chat_messages,
                            menu_items=menu_items)
 
-@app.route('/admin')
+@app.route('/super-secret-admin')
 def admin():
-    return render_template('admin.html')
+    chat_messages = Chat_messages.query.order_by(Chat_messages.id.desc()).limit(100)
+    return render_template('admin.html', chat_messages=chat_messages)
 
 @socketio.on('sent_message')
 def get_messages(message):

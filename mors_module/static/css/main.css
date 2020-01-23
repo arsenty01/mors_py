@@ -305,3 +305,24 @@ input[type=submit]:hover {
     font-size: 12px;
     float: right;
 }
+
+/* Admin */
+
+.now_plays, .big_admin_block {
+    width: 100wv;
+    display: flex;
+    flex-direction: row;
+}
+.now_plays {
+    justify-content: space-around;
+    margin-top: 1vh;
+    text-align: center;
+}
+.now_plays form {
+    margin-top: 1vh;
+}
+
+
+.big_admin_block {
+    justify-content: space-between;
+}

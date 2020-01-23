@@ -3,7 +3,6 @@ $(document).ready(function ($) {
     let socket = io.connect('http://' + document.domain + ':' + location.port + '/');
     let radioStatus = false;
     let radioSound = false;
-    let curVolume = 1;
 
     //Elements
     let chat = $('#cr-body');
@@ -45,7 +44,6 @@ $(document).ready(function ($) {
             radioStatus = false;
         } else {
             document.getElementById('radio').play();
-            document.getElementById('radio').volume = curVolume;
             play.text('Пауза');
             radioStatus = true;
         }

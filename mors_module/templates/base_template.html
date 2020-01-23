@@ -11,9 +11,37 @@
 </head>
 <body>
     <div id="main-wrapper">
-        {% include 'content_head.html'%}
-
-        {% include 'content_body.html'%}
+        <div id="content-head-1line">
+             <div id="head-left">
+                <div id="logo-block">
+                    <a href="/">
+                        <img src="{{ url_for('static', filename='img/logo_m.png') }}" alt=""/>
+                    </a>
+                </div>
+                <div id="social-block">
+                    <div id="social-label">в соцсетях:</div>
+                    <div class="social-icon" id="vk-link">
+                        <a href="/" target="_parent">
+                            <img src="{{ url_for('static', filename='img/vk.png') }}" alt=""/>
+                        </a>
+                    </div>
+                    <div class="social-icon" id="tw-link">
+                        <a href="#">
+                            <img src="{{ url_for('static', filename='img/twitter.png' )}}" alt=""/>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div id="menu">
+                <ul>
+                    {% for item in menu_items %}
+                    <li><a href="{{ item[1] }}">{{ item[0] }}</a></li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+        {% block main %}
+        {% endblock %}
         <div class="spacer"></div>
         <div id="content-footer">
             <div id="copyright">Все права защищены. Молодежная радиостанция "Морс" &copy; 2019 г. ver.{{ version }}</div>

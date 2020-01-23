@@ -1,12 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Панель управления сайтом</title>
-</head>
-<body>
+{% extends "base_template.html" %}
+{% block main %}
+<div id="content-head-2line">
+    Это админ панель! Пока нет авторизации на сайте она никак не защищена! Не допускайте попадания ссылки на панель сторонних лиц!
+</div>
+<div class="now_plays">
     <div>
-        <p>Создать эфир</p>
+        <label>Сейчас в эфире:</label><br/>
+        <form>
+            <input class="name" type="text" placeholder="Передача" pattern="^[А-яA-z0-9\-_ !,.:+=?)(]*$" required/>
+            <input class="name" type="text" placeholder="Время" pattern="^[А-яA-z0-9\-_ !,.:+=?)(]*$" required/>
+            <input class="send" type="submit"/>
+        </form>
     </div>
-</body>
-</html>
+</div>
+<hr/>
+<div class="big_admin_block">
+    <div class="chat_admin">
+        <div id="cr-body">
+            {% if chat_messages %}
+                {% for msg in chat_messages %}
+                    <div class="message">
+                        <div class="author">{{msg.author}}</div>
+                            <div class="time">{{msg.timestamp.strftime("%d.%m.%Y, %H:%M:%S")}}</div>
+                                {{msg.text}}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+    <div class="schedule_admin"></div>
+</div>
+
+{% endblock %}
