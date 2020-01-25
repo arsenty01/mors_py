@@ -28,7 +28,7 @@ html, body {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
-    
+
 }
 #social-block {
     display: flex;
@@ -70,6 +70,7 @@ html, body {
     color: azure;
     display: flex;
     flex-direction: column;
+    justify-content: space-around;
     align-items: center;
     padding: 10px;
 }
@@ -131,7 +132,7 @@ html, body {
     border: 1px solid #303030;
     border-radius: 15px;
     background-color: #212121;
-} 
+}
 #vk-chat {
     padding:5px 30px;
     margin: 10px;
@@ -189,7 +190,7 @@ h2 {
 }
 
 #cr-body::-webkit-scrollbar-track, #tt-body::-webkit-scrollbar-track {
-    -webkit-box-shadow: inset 0 0 6px rgba(197, 19, 43, 0); 
+    -webkit-box-shadow: inset 0 0 6px rgba(197, 19, 43, 0);
     border-radius: 10px;
 }
 
@@ -202,7 +203,7 @@ h2 {
     background-color: #212121;
 }
 .message {
-    border: 1px solid #303030; 
+    border: 1px solid #303030;
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 5px;
@@ -342,4 +343,73 @@ input[type=submit]:hover {
 
 .time-table-admin {
     width:50vw !important;
+}
+
+@media screen and (max-width: 1220px) {
+    html, body {
+        font-size: 4vw;
+    }
+    #menu {
+        display: none;
+    }
+    #content-body {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #content-head-1line {
+        flex-direction: column;
+        justify-content: space-around;
+        padding: 0;
+    }
+    #head-left {
+        justify-content: space-around;
+        width: 100vw;
+    }
+    #content-body-1line {
+        flex-direction: column;
+        width: 100%;
+        padding: 0;
+        margin: 0;
+    }
+    #time-table, #vk-chat {
+        margin: 1vw;
+        width: 94vw;
+        padding: 2vw;
+    }
+    #social-label {
+        font-size: 1.5vh !important;
+    }
+    #content-head-2line {
+        height: 20vh;
+    }
+    #player-timing, #player-label {
+        font-size: 2vh !important;
+    }
+    #player-on-air {
+        font-size: 3vh !important;
+    }
+    #player-controls button {
+        height: 5vh;
+        font-size: 2vh !important;
+        font-weight: bold;
+    }
+    #tt-header select {
+        width: 20vw !important;
+        height: 5vh !important;
+        font-size: 2vh !important;
+        display: none;
+    }
+    .guests {
+        font-size: 1.5vh;
+    }
+    .message {
+        font-size: 1.5vh;
+    }
+    .author {
+        font-size: 1vh !important;
+    }
+    #cr-body {
+        height: 50vh;
+    }
 }
