@@ -1,7 +1,7 @@
 from mors_module import db
 
 
-class Chat_messages(db.Model):
+class ChatMessages(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     author = db.Column(db.String(64), index=True)
     text = db.Column(db.String(280))
@@ -28,7 +28,7 @@ class Broadcast(db.Model):
     date = db.Column(db.DateTime)
 
     def __repr__(self):
-        return  '<Broadcast {}>'.format(self.date)
+        return '<Broadcast {}>'.format(self.date)
 
 
 class CurrentProgram(db.Model):

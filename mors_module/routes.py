@@ -1,5 +1,5 @@
 from mors_module import app, db
-from mors_module.models import Chat_messages
+from mors_module.models import ChatMessages
 from flask import render_template
 from flask_socketio import SocketIO, emit
 from datetime import datetime
@@ -57,7 +57,7 @@ def index():
         "26.01.2020"
     ]
 
-    chat_messages = Chat_messages.query.order_by(Chat_messages.id.desc()).limit(20)
+    chat_messages = ChatMessages.query.order_by(ChatMessages.id.desc()).limit(20)
     # db.session.execute('''DELETE FROM chat_messages''')
     # db.session.commit()
 
@@ -72,7 +72,7 @@ def index():
 
 @app.route('/super-secret-admin')
 def admin():
-    chat_messages = Chat_messages.query.order_by(Chat_messages.id.desc()).limit(100)
+    chat_messages = ChatMessages.query.order_by(ChatMessages.id.desc()).limit(100)
 
     schedule = [
         {
@@ -115,7 +115,7 @@ def admin():
 
 @socketio.on('sent_message')
 def get_messages(message):
-    msg = Chat_messages(**message, timestamp=datetime.today())
+    msg = ChatMessages(**message, timestamp=datetime.today())
     db.session.add(msg)
     db.session.commit()
     emit('new_message', {
