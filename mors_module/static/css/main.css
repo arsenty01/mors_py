@@ -148,7 +148,6 @@ h2 {
     justify-content: space-around;
     overflow-x: hidden;
     overflow-y: scroll;
-    height: 50vh;
 }
 .schedule {
     display: flex;
