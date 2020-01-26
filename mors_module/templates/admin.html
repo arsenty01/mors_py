@@ -1,86 +1,83 @@
-{% extends "base_template.html" %}
-{% block main %}
-<div id="content-head-2line">
-    Это админ панель! Пока нет авторизации на сайте она никак не защищена! Не допускайте попадания ссылки на панель сторонних лиц!
-</div>
-<div class="now_plays">
-    <div>
-        <label>Сейчас в эфире:</label><br/>
-        <form>
-            <input class="name" type="text" placeholder="Передача" pattern="^[А-яA-z0-9\-_ !,.:+=?)(]*$" required/>
-            <input class="name" type="text" placeholder="Время" pattern="^[А-яA-z0-9\-_ !,.:+=?)(]*$" required/>
-            <input class="send" type="submit"/>
-        </form>
-    </div>
-</div>
-<hr/>
-<div class="big_admin_block">
-    <div class="chat_admin">
-        <div id="cr-body">
-            {% if chat_messages %}
-                {% for msg in chat_messages %}
-                    <div class="message">
-                        <div class="author" id="{{msg.id}}">{{msg.author}}</div>
-                            <div class="time">
-                                {{msg.timestamp.strftime("%d.%m.%Y, %H:%M:%S")}}
-                                <button class="main-button btn-red btn-delete">Удалить</button>
-                            </div>
-                                {{msg.text}}
-                    </div>
-                {% endfor %}
-            {% endif %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="icon" href="{{url_for('static', filename='img/favicon.png')}}" type="image/ico"/>
+    <link rel="shortcut icon" href="{{url_for('static', filename='img/favicon.png')}}" type="image/x-icon"/>
+    <title>Радио "Морс" - Слушай маму и Морс!</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='css/admin.css')}}"/>
+    <script src="{{url_for('static', filename='js/lib/jquery-3.4.1.min.js')}}"></script>
+    <script src="{{url_for('static', filename='js/admin.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <script src="{{url_for('static', filename='js/radio.js')}}"></script>
+</head>
+<body>
+    <div id="main-wrapper">
+        <div id="content-head-2line">
+            Это админ панель! Пока нет авторизации на сайте она никак не защищена! Не допускайте попадания ссылки на панель сторонних лиц!
         </div>
-    </div>
-    <div class="schedule_admin">
-        <div id="time-table" class="time-table-admin">
-
-            {% if schedule %}
-
-            <div id="tt-header">
-                <h2>эфир
-                    <span class="special_date">
-                        <select>
-                            {% for broadcast in broadcasts %}
-                                <option>{{ broadcast }}</option>
-                            {% endfor %}
-                        </select>
-                    </span>
-                </h2>
+        <div class="now_plays">
+            <div>
+                <label>Сейчас в эфире:</label><br/>
+                <form>
+                    <input class="name" type="text" placeholder="Передача" pattern="^[А-яA-z0-9\-_ !,.:+=?)(]*$" required/>
+                    <input class="name" type="text" placeholder="Время" pattern="^[А-яA-z0-9\-_ !,.:+=?)(]*$" required/>
+                    <input class="send" type="submit"/>
+                </form>
             </div>
-            <div id="tt-body">
-
-                {% for program in schedule %}
-
-                <div class="schedule">
-                    <div class="time">
-                        {{ program.time }}
-                    </div>
-                    <div class="details">
-                        <div class="program">
-                            {{ program.name }}
-                        </div>
-                        <div class="guests">
-                            {{ program.guest }}
-                        </div>
+        </div>
+        <hr/>
+        <h2>Администрирование расписания</h2>
+        <div class="schedule_edit big-block">
+            {% for program in schedule %}
+                <div class="schedule_item block">
+                    <div class="schedule_time">{{program.time}}</div>
+                    <div class="schedule_name">{{program.name}}</div>
+                    <div class="schedule_hosts">{{program.guest}}</div>
+                    <div class="schedule_actions">
+                        <button class="btn btn-red">Удалить</button>
                     </div>
                 </div>
-
-                {% endfor %}
-
+            {% endfor %}
+            <div class="schedule_add">
+                <form>
+                    <form>
+                        <input class="time" type="text" placeholder="Время" pattern="^[А-яA-z0-9\-_ !,.:+=?)(]*$" required/>
+                        <input class="name" type="text" placeholder="Сообщение" pattern="^[А-яA-z0-9\-_ !,.:+=?)(]*$" required/>
+                        <input class="guests" type="text" placeholder="Сообщение" pattern="^[А-яA-z0-9\-_ !,.:+=?)(]*$" required/>
+                        <input class="send" type="submit"/>
+                    </form>
+                </form>
             </div>
-            {% else %}
-
-            <h3>Расписание не загружено!</h3>
-
-            {% endif %}
-            <form>
-                <input type="text" name="time" placeholder="Время" pattern="^[А-яA-z0-9\-_ !,.:+=?)(]*$" required/>
-                <input type="text" name="name" placeholder="Название" pattern="^[А-яA-z0-9\-_ !,.:+=?)(]*$" required/>
-                <input type="text" name="hosts" placeholder="Ведущие" pattern="^[А-яA-z0-9\-_ !,.:+=?)(]*$" required/>
-                <input class="send" type="submit" />
-            </form>
+        </div>
+        <hr/>
+        <h2>Администрирование чата</h2>
+        <div class="chat-edit big-block">
+            {% for msg in chat_messages %}
+                <div class="message_item block">
+                    <div class="message_service_info">
+                        <div class="message_author ">{{msg.author}}</div>
+                        <div class="message_time">{{msg.timestamp.strftime("%d.%m.%Y, %H:%M:%S")}}</div>
+                    </div>
+                    <div class="message_text">{{msg.text}}</div>
+                    <div class="message_actions">
+                        <button class="btn btn-red">Удалить</button>
+                    </div>
+                </div>
+            {% endfor %}
         </div>
     </div>
-</div>
+    <div class="spacer"></div>
+        <div id="content-footer">
+            <div id="copyright">Все права защищены. Молодежная радиостанция "Морс" &copy; 2013-2020 гг. ver.{{ version }}</div>
+        </div>
+    </div>
+</body>
+</html>
 
-{% endblock %}
+
+
+
+
+
+

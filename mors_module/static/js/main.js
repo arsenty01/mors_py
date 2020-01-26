@@ -8,6 +8,8 @@ $(document).ready(function ($) {
     let chat = $('#cr-body');
     let form = $('#chat');
     let body = $('body');
+    let playing = $('#player-on-air')
+    let playing_timing = $('#player-timing')
 
     //Buttons
     let play = $('.play');
@@ -21,7 +23,12 @@ $(document).ready(function ($) {
         chat.scrollTop(chat[0].scrollHeight);
     }
 
+    function now_playing() {
+        socket.emit('cp_request')
+    }
+
     reset_chat_scroll();
+    now_playing();
 
     //Actions
 
@@ -55,7 +62,6 @@ $(document).ready(function ($) {
 
     //Listeners
     socket.on('messages_list', function (messages) {
-        console.log(messages);
         chat.empty();
         messages = messages.messages;
         for (let i = messages.length-1; i >= 0; i--) {
@@ -67,11 +73,16 @@ $(document).ready(function ($) {
     });
 
     socket.on('new_message', function (message) {
-        console.log(message);
         chat.prepend(
             '<div class="message"><div class="author">'+message['author']+'</div><div class="time">'+message['timestamp']+'</div>'+message['text']+'</div>'
         );
         reset_chat_scroll();
     });
 
+    socket.on('cp_response', function (program){
+        playing.empty();
+        playing.text(program.title)
+        playing_timing.empty()
+        playing_timing.text(program.time)
+    });
 });

@@ -1,0 +1,132 @@
+html, body {
+    margin: 0;
+    padding: 1vh;
+    background-color: #181A1D;
+    color: azure;
+    font-family: Helvetica, sans-serif;
+    font-weight: lighter;
+}
+#content-head-2line {
+    background-color: rgb(197, 19, 43);
+    color: azure;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+}
+input[type="text"], select {
+    color: azure;
+    background-color: #181A1D;
+    border: #303030 solid 2px;
+    border-radius: 10px;
+    padding: 5px;
+    height: 35px;
+    outline: none;
+}
+input[type="text"]:focus {
+    background-color: rgb(197, 19, 43);
+}
+input[type="text"]::placeholder {
+    color: azure;
+}
+input[type=submit] {
+    height: 50px;
+    background-color: #181A1D;
+    color: azure;
+    border: #303030 solid 2px;
+    border-radius: 10px;
+    padding: 5px;
+    cursor: pointer;
+    outline: none;
+}
+input[type=submit]:hover {
+    background-color: rgb(197, 19, 43);
+}
+.btn-white {
+    background-color: azure;
+    color: rgb(197, 19, 43);
+    border: 2px solid azure;
+}
+.btn-white:hover {
+    background-color: rgb(197, 19, 43);
+    color: azure;
+    border:2px solid azure;
+}
+.btn-red {
+    background-color:  rgb(197, 19, 43);
+    border: solid 2px azure;
+    color: azure;
+}
+.btn-red:hover {
+    background-color: azure;
+    color: rgb(197, 19, 43);
+}
+.spacer {
+    padding:5px 30px;
+    margin-top: 25px;
+}
+
+#content-footer {
+    display: flex;
+    flex-direction: row-reverse;
+    margin: 10px 30px;
+    margin-bottom: 20px;
+    border-top: solid #707070 1px;
+}
+#copyright {
+    color: #707070;
+    padding-top: 10px;
+    font-size: 12px;
+    float: right;
+}
+
+.big-block {
+    display: flex;
+    flex-direction: column;
+    max-height: 50vh;
+    overflow-x: hidden;
+    overflow-y: scroll;
+}
+.big-block::-webkit-scrollbar {
+    width: 2px;
+}
+.big-block::-webkit-scrollbar-track, #tt-body::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(197, 19, 43, 0);
+    border-radius: 10px;
+}
+
+.big-block::-webkit-scrollbar-thumb, #tt-body::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background-color: rgb(197, 19, 43);
+}
+.block {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    border: 1px solid #303030;
+    background-color: #212121;
+    border-radius: 1vh;
+    padding: 1vh;
+}
+.schedule_item {
+    margin-bottom: 3vh;
+}
+.schedule_item * {
+    width: 25vw;
+}
+.message_item .message_actions, .message_item .message_service_info {
+    width: 20vw;
+}
+.message_item .message_text {
+    width: 60vw;
+}
+.message_author {
+    color: rgb(197, 19, 43);
+}
+.message_time {
+    font-size: 1vh;
+    color: #707070;
+}
+
+

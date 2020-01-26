@@ -9,6 +9,7 @@ html, body {
 #main-wrapper {
     display: flex;
     flex-direction: column;
+    margin-top: 1vh;
 }
 #content-head {
     width: 100%;
@@ -204,18 +205,19 @@ h2 {
 }
 .message {
     border: 1px solid #303030;
+    font-size: 1.8vh;
     padding: 10px;
     border-radius: 10px;
     margin-bottom: 5px;
 }
 
 .message .author {
-    font-size: 18px;
+    font-size: 1.3vh;
     font-weight: bold;
     color: rgb(197, 19, 43);
 }
 .message .time {
-    font-size: 10px;
+    font-size: 0.9vh;
 }
 .message .time {
     float: right;
@@ -306,45 +308,6 @@ input[type=submit]:hover {
     font-size: 12px;
     float: right;
 }
-
-/* Admin */
-
-.now_plays, .big_admin_block {
-    width: 100vw;
-    display: flex;
-    flex-direction: row;
-}
-.now_plays {
-    justify-content: space-around;
-    margin-top: 1vh;
-    text-align: center;
-    margin-bottom: 2vh;
-}
-.now_plays form {
-    margin-top: 1vh;
-}
-
-.big_admin_block {
-    justify-content: space-between;
-}
-.chat_admin {
-    width: 50vw;
-    height: 60vh;
-}
-
-.chat_admin #cr-body {
-    height: 100% !important;
-    padding-top: 1vh;
-}
-
-.btn-delete {
-    margin-left: 1vw;
-}
-
-.time-table-admin {
-    width:50vw !important;
-}
-
 @media screen and (max-width: 1220px) {
     html, body {
         font-size: 4vw;

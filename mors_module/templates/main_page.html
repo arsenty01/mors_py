@@ -10,7 +10,7 @@
                  <source src="http://s0.radioheart.ru:8000/RH20499" type="audio/wav">
              </audio>
              <div id="player-on-air">
-                 {{ current_program.name }}
+                 {{ current_program.title }}
             </div>
             <div id="player-timing">
                 {{ current_program.time }}
@@ -31,7 +31,7 @@
                         <span class="special_date">
                             <select>
                                 {% for broadcast in broadcasts %}
-                                    <option>{{ broadcast }}</option>
+                                    <option>{{ broadcast.date }}</option>
                                 {% endfor %}
                             </select>
                         </span>
@@ -47,10 +47,10 @@
                         </div>
                         <div class="details">
                             <div class="program">
-                                {{ program.name }}
+                                {{ program.title }}
                             </div>
                             <div class="guests">
-                                {{ program.guest }}
+                                {{ program.hosts }}
                             </div>
                         </div>
                     </div>

@@ -24,7 +24,7 @@ class Program(db.Model):
 
 class Broadcast(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.DateTime)
+    date = db.Column(db.String(10))
 
     def __repr__(self):
         return '<Broadcast {}>'.format(self.date)
