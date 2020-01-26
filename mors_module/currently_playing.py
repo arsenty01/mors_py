@@ -26,13 +26,13 @@ class CurrentlyPlaying:
             else:
                 program = {
                     "time": "до следующего эфира",
-                    "name": "просто музыка",
+                    "title": "просто музыка",
                     "guests": ""
                 }
         else:
             program = {
                 "time": "до следующего эфира",
-                "name": "просто музыка",
+                "title": "просто музыка",
                 "guests": ""
             }
 
