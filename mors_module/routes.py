@@ -42,7 +42,4 @@ def currently_playing():
     while True:
         time.sleep(30)
         current_program = CurrentlyPlaying.now_playing()
-        emit('cp_response', {
-            'title': current_program.title,
-            'time': current_program.time
-        })
+        emit('cp_response', current_program)

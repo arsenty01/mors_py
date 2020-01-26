@@ -21,7 +21,10 @@ class CurrentlyPlaying:
                 st_obj = current_date.replace(hour=int(start_time[0]), minute=int(start_time[1]))
                 et_obj = current_date.replace(hour=int(end_time[0]), minute=int(end_time[1]))
                 if st_obj < current_date < et_obj:
-                    program = item
+                    program = {
+                        "time": item.time,
+                        "title": item.title
+                    }
                     break
             else:
                 program = {
