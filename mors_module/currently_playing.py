@@ -7,8 +7,13 @@ class CurrentlyPlaying:
         Класс отвечает за функционал текщего воспроизведения
     """
 
-    @staticmethod
-    def now_playing():
+    default_value = {
+        "time": "до следующего эфира",
+        "title": "просто музыка",
+        "guests": ""
+    }
+
+    def now_playing(self):
 
         current_date = datetime.datetime.today()
         programs = Program.query.filter(Broadcast.date == current_date.strftime('%d.%m.%Y')).all()
@@ -27,16 +32,8 @@ class CurrentlyPlaying:
                     }
                     break
             else:
-                program = {
-                    "time": "до следующего эфира",
-                    "title": "просто музыка",
-                    "guests": ""
-                }
+                program = self.default_value
         else:
-            program = {
-                "time": "до следующего эфира",
-                "title": "просто музыка",
-                "guests": ""
-            }
+            program = self.default_value
 
         return program

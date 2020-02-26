@@ -1,6 +1,8 @@
 $(document).ready(function ($) {
     //Variables
     let socket = io.connect('http://' + document.domain + ':' + location.port + '/');
+    console.log(document.domain)
+    console.log(location.port)
     let radioStatus = false;
     let radioSound = false;
 

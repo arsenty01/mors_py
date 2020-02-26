@@ -1,18 +1,19 @@
-from mors_module import app, db
+from mors_module import application, socketio
+from mors_module import db
 from mors_module.currently_playing import *
 from mors_module.models import ChatMessages, Program, Broadcast
 from flask import render_template
-from flask_socketio import SocketIO, emit
+from flask_socketio import emit
 from datetime import datetime
-import time
-socketio = SocketIO(app)
 
 
-@app.route('/')
-@app.route('/index')
+
+@application.route('/')
+@application.route('/index')
 def index():
+    cp_obj = CurrentlyPlaying()
 
-    current_program = CurrentlyPlaying.now_playing()
+    current_program = cp_obj.now_playing()
     broadcasts = Broadcast.query.all()
     schedule = Program.query.filter(Broadcast.date == '26.01.2020').all()
     chat_messages = ChatMessages.query.order_by(ChatMessages.id.desc()).limit(20)
@@ -39,7 +40,5 @@ def get_messages(message):
 
 @socketio.on('cp_request')
 def currently_playing():
-    while True:
-        time.sleep(30)
-        current_program = CurrentlyPlaying.now_playing()
-        emit('cp_response', current_program)
+    cp_obj = CurrentlyPlaying()
+    emit('cp_response', cp_obj.now_playing())
