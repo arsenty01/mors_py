@@ -15,6 +15,7 @@ def index():
 
     current_program = cp_obj.now_playing()
     broadcasts = Broadcast.query.all()
+    #todo костыль
     schedule = Program.query.filter(Broadcast.date == '26.01.2020').all()
     chat_messages = ChatMessages.query.order_by(ChatMessages.id.desc()).limit(20)
 
@@ -42,3 +43,18 @@ def get_messages(message):
 def currently_playing():
     cp_obj = CurrentlyPlaying()
     emit('cp_response', cp_obj.now_playing())
+
+
+@socketio.on('refresh_schedule')
+def refresh_schedule(date):
+    broadcast = Broadcast.query.filter(Broadcast.date == date).first().id
+    schedule = Program.query.filter(Program.broadcast_id == broadcast).all()
+    print(schedule)
+    programs_json = []
+    for item in schedule:
+        programs_json.append({
+            'title': item.title,
+            'hosts': item.hosts,
+            'time': item.time
+        })
+    emit('new_schedule', programs_json)

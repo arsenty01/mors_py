@@ -8,10 +8,11 @@ $(document).ready(function ($) {
 
     //Elements
     let chat = $('#cr-body');
+    let schedule = $('#tt-body');
     let form = $('#chat');
     let body = $('body');
-    let playing = $('#player-on-air')
-    let playing_timing = $('#player-timing')
+    let playing = $('#player-on-air');
+    let playing_timing = $('#player-timing');
 
     //Buttons
     let play = $('.play');
@@ -20,17 +21,21 @@ $(document).ready(function ($) {
     //Fields
     let author = $('.name');
     let message = $('.msg');
+    let broadcast = $('.special-date');
 
     function reset_chat_scroll() {
         chat.scrollTop(chat[0].scrollHeight);
     }
 
     function now_playing() {
-        socket.emit('cp_request')
+        socket.emit('cp_request');
     }
 
     reset_chat_scroll();
     now_playing();
+    broadcast.change(function() {
+        socket.emit('refresh_schedule', broadcast.find(':selected').text());
+    });
 
     //Actions
 
@@ -81,10 +86,26 @@ $(document).ready(function ($) {
         reset_chat_scroll();
     });
 
-    socket.on('cp_response', function (program){
+    socket.on('cp_response', function (program) {
         playing.empty();
-        playing.text(program.title)
-        playing_timing.empty()
-        playing_timing.text(program.time)
+        playing.text(program.title);
+        playing_timing.empty();
+        playing_timing.text(program.time);
+    });
+
+    socket.on('new_schedule', function(new_schedule) {
+        schedule.empty();
+
+        if (new_schedule.length > 0) {
+            for (let i=0; i < new_schedule.length; i++) {
+                schedule.append(
+                    '<div class="schedule"><div class="time">'+new_schedule[i].time+'</div><div class="details"><div class="program">'+new_schedule[i].title+'</div><div class="guests">'+new_schedule[i].hosts+'</div></div></div>'
+                );
+            };
+        } else {
+            schedule.append(
+                '<h3>Расписание отсутствует</h3>'
+            );
+        };
     });
 });
