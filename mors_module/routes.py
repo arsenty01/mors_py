@@ -22,7 +22,7 @@ def index():
     return render_template('main_page.html',
                            schedule=schedule,
                            broadcasts=broadcasts,
-                           version='20.11 (alpha)',
+                           version='20.31 (alpha)',
                            chat_messages=chat_messages,
                            current_program=current_program)
 
