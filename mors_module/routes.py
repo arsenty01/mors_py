@@ -2,6 +2,7 @@ from mors_module import application, socketio
 from mors_module import db
 from mors_module.currently_playing import *
 from mors_module.models import ChatMessages, Program, Broadcast
+from mors_module.methods import get_nearest_date
 from flask import render_template
 from flask_socketio import emit
 from datetime import datetime
@@ -13,8 +14,8 @@ def index():
     cp_obj = CurrentlyPlaying()
     current_program = cp_obj.now_playing()
     broadcasts = Broadcast.query.all()
-    # todo костыль
-    schedule = Program.query.filter(Broadcast.date == '26.01.2020').all()
+    today = datetime.today()
+    schedule = Program.query.filter(Broadcast.date == get_nearest_date(today)).all()
     chat_messages = ChatMessages.query.order_by(ChatMessages.id.desc()).limit(20)
 
     return render_template('main_page.html',
