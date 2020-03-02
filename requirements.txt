@@ -4,5 +4,3 @@ Flask
 Flask-sqlalchemy
 Flask-socketio
 Flask-migrate
-gevent
-uWSGI
