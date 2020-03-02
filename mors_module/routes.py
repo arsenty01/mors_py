@@ -7,15 +7,13 @@ from flask_socketio import emit
 from datetime import datetime
 
 
-
 @application.route('/')
 @application.route('/index')
 def index():
     cp_obj = CurrentlyPlaying()
-
     current_program = cp_obj.now_playing()
     broadcasts = Broadcast.query.all()
-    #todo костыль
+    # todo костыль
     schedule = Program.query.filter(Broadcast.date == '26.01.2020').all()
     chat_messages = ChatMessages.query.order_by(ChatMessages.id.desc()).limit(20)
 
