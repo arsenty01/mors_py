@@ -18,6 +18,9 @@ def index():
     schedule = Program.query.filter(Broadcast.date == get_nearest_date(today)).all()
     chat_messages = ChatMessages.query.order_by(ChatMessages.id.desc()).limit(20)
 
+    print('broadcasts', broadcasts)
+    print('schedule', schedule)
+
     return render_template('main_page.html',
                            schedule=schedule,
                            broadcasts=broadcasts,
@@ -34,7 +37,7 @@ def get_messages(message):
     emit('new_message', {
         'author': message['author'],
         'text': message['text'],
-        'timestamp': msg.timestamp.strftime("%d.%m.%Y, %H:%M:%S")
+        'timestamp': msg.timestamp.strftime('%d.%m.%Y, %H:%M:%S')
     }, broadcast=True)
 
 
@@ -46,9 +49,13 @@ def currently_playing():
 
 @socketio.on('refresh_schedule')
 def refresh_schedule(date):
-    broadcast = Broadcast.query.filter(Broadcast.date == date).first().id
-    schedule = Program.query.filter(Program.broadcast_id == broadcast).all()
-    print(schedule)
+    date_dt = datetime.strptime(date, '%d.%m.%Y')
+    broadcast = Broadcast.query.filter(Broadcast.date == date_dt).first()
+    if broadcast:
+        broadcast_id = broadcast.id
+        schedule = Program.query.filter(Program.broadcast_id == broadcast_id).all()
+    else:
+        schedule = []
     programs_json = []
     for item in schedule:
         programs_json.append({
