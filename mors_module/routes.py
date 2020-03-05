@@ -15,6 +15,7 @@ def index():
     current_program = cp_obj.now_playing()
     broadcasts = Broadcast.query.all()
     today = datetime.today()
+    #todo Здесь нужен метод получающий расписание по дейттайму
     schedule = Program.query.filter(Broadcast.date == get_nearest_date(today)).all()
     chat_messages = ChatMessages.query.order_by(ChatMessages.id.desc()).limit(20)
 
@@ -50,6 +51,7 @@ def currently_playing():
 @socketio.on('refresh_schedule')
 def refresh_schedule(date):
     date_dt = datetime.strptime(date, '%d.%m.%Y')
+    #todo сюдой тоже
     broadcast = Broadcast.query.filter(Broadcast.date == date_dt).first()
     if broadcast:
         broadcast_id = broadcast.id
