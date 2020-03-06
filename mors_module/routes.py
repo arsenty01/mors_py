@@ -1,8 +1,6 @@
 from mors_module import application, socketio
-from mors_module import db
 from mors_module.currently_playing import *
-from mors_module.models import ChatMessages, Program, Broadcast
-from mors_module.methods import get_nearest_date
+from mors_module.methods import *
 from flask import render_template
 from flask_socketio import emit
 from datetime import datetime
@@ -14,9 +12,8 @@ def index():
     cp_obj = CurrentlyPlaying()
     current_program = cp_obj.now_playing()
     broadcasts = Broadcast.query.all()
-    today = datetime.today()
-    #todo Здесь нужен метод получающий расписание по дейттайму
-    schedule = Program.query.filter(Broadcast.date == get_nearest_date(today)).all()
+    b_cast_date = get_next_or_last_broadcast(datetime.today())
+    schedule = get_schedule_by_date(b_cast_date)
     chat_messages = ChatMessages.query.order_by(ChatMessages.id.desc()).limit(20)
 
     print('broadcasts', broadcasts)
@@ -51,8 +48,7 @@ def currently_playing():
 @socketio.on('refresh_schedule')
 def refresh_schedule(date):
     date_dt = datetime.strptime(date, '%d.%m.%Y')
-    #todo сюдой тоже
-    broadcast = Broadcast.query.filter(Broadcast.date == date_dt).first()
+    broadcast = get_schedule_by_date(date_dt)
     if broadcast:
         broadcast_id = broadcast.id
         schedule = Program.query.filter(Program.broadcast_id == broadcast_id).all()
