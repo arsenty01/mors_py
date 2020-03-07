@@ -14,12 +14,12 @@ def get_next_or_last_broadcast(tmp_date):
     where_prev = Broadcast.date <= tmp_date   # из предыдущих
 
     next_date = db.session.query(select_min).filter(where_next).one()[0]
+    if next_date:
+        return next_date
     previous_date = db.session.query(select_max).filter(where_prev).one()[0]
-
-    if not(next_date or previous_date):
-        raise Exception('Таблица эфиров пустая')
-
-    return previous_date if next_date is None else next_date
+    if previous_date:
+        return previous_date
+    raise Exception('Таблица эфиров пустая')
 
 
 def get_schedule_by_date(date: datetime):
@@ -28,5 +28,13 @@ def get_schedule_by_date(date: datetime):
     :param date: дата
     :return: Расписание
     """
-    b_cast_id = db.session.query(Broadcast.id).filter(Broadcast.date == date).first()[0]
-    return Program.query.filter(Program.broadcast_id == b_cast_id).all()
+    bobj = Broadcast.query.filter(Broadcast.date == date).first()
+    schedule = Program.query.filter(Program.broadcast_id == bobj.id).all()
+    programs_json = []
+    for item in schedule:
+        programs_json.append({
+            'title': item.title,
+            'hosts': item.hosts,
+            'time': item.time
+        })
+    return programs_json

@@ -48,17 +48,5 @@ def currently_playing():
 @socketio.on('refresh_schedule')
 def refresh_schedule(date):
     date_dt = datetime.strptime(date, '%d.%m.%Y')
-    broadcast = get_schedule_by_date(date_dt)
-    if broadcast:
-        broadcast_id = broadcast.id
-        schedule = Program.query.filter(Program.broadcast_id == broadcast_id).all()
-    else:
-        schedule = []
-    programs_json = []
-    for item in schedule:
-        programs_json.append({
-            'title': item.title,
-            'hosts': item.hosts,
-            'time': item.time
-        })
-    emit('new_schedule', programs_json)
+    schedule = get_schedule_by_date(date_dt)
+    emit('new_schedule', schedule)
