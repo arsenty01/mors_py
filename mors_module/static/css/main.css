@@ -6,6 +6,29 @@ html, body {
     font-family: Helvetica, sans-serif;
     font-weight: lighter;
 }
+.login_wrapper {
+    width: 100vw;
+    height: 90vh;
+    display:flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.login_wrapper form {
+    margin: 0 auto;
+    width: 400px;
+}
+.login_wrapper input {
+    width: 100%;
+}
+.remember {
+    width: 100%;
+    justify-content:center;
+    text-align: center;
+}
+.remember input {
+    width: 10% !important;
+}
+
 #main-wrapper {
     display: flex;
     flex-direction: column;
@@ -225,12 +248,11 @@ h2 {
     padding-top:10px;
     text-align: right;
 }
-input[type="text"], select {
+input[type="text"], select, input[type="password"] {
     color: azure;
     background-color: #181A1D;
     border: #303030 solid 2px;
     border-radius: 10px;
-    padding: 5px;
     height: 35px;
     outline: none;
 }
@@ -238,10 +260,10 @@ select {
     margin-top: -10px;
 }
 
-input[type="text"]:focus {
+input[type="text"]:focus, input[type="password"]:focus {
     background-color: rgb(197, 19, 43);
 }
-input[type="text"]::placeholder {
+input[type="text"]::placeholder, input[type="password"]:focus {
     color: azure;
 }
 .msg {

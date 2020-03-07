@@ -1,0 +1,21 @@
+{% extends "base_template.html" %}
+{% block main%}
+<div class="login_wrapper">
+    <div>
+        <h2>Войти</h2>
+        <form action="" method="post" novalidate>
+            {{ form.hidden_tag() }}
+            <p>
+                {{ form.login.label }}<br>
+                {{ form.login(size=32) }}
+            </p>
+            <p>
+                {{ form.password.label }}<br>
+                {{ form.password(size=32) }}
+            </p>
+            <div class="remember"><p>{{ form.remember_me() }} {{ form.remember_me.label }}</p></div>
+            <p>{{ form.submit() }}</p>
+        </form>
+    </div>
+</div>
+{% endblock %}

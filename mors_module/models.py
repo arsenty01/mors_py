@@ -1,4 +1,7 @@
-from mors_module import db
+from flask_login import UserMixin
+from werkzeug.security import generate_password_hash, check_password_hash
+
+from mors_module import db, login_manager
 
 
 class ChatMessages(db.Model):
@@ -39,3 +42,30 @@ class CurrentProgram(db.Model):
         return '<Current {}>'.format(self.name)
 
 
+class User(db.Model, UserMixin):
+    '''
+        модель юзверя
+    '''
+    id = db.Column(db.Integer, primary_key=True)
+    login = db.Column(db.String(32))
+    email = db.Column(db.String(140))
+    name = db.Column(db.String(32))
+    password_hash = db.Column(db.String(140))
+
+    def set_password(self, password):
+        '''
+            сеттим пароль
+        '''
+        self.password_hash = generate_password_hash(password)
+
+    def check_password(self, password):
+        '''
+            чекаем пароль
+        '''
+
+        return check_password_hash(self.password_hash, password)
+
+
+@login_manager.user_loader
+def load_user(uid):
+    return  User.query.get(int(uid))
