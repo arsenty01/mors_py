@@ -16,13 +16,11 @@ def index():
     schedule = get_schedule_by_date(b_cast_date)
     chat_messages = ChatMessages.query.order_by(ChatMessages.id.desc()).limit(20)
 
-    print('broadcasts', broadcasts)
-    print('schedule', schedule)
-
     return render_template('main_page.html',
                            schedule=schedule,
                            broadcasts=broadcasts,
-                           version='20.31 (alpha)',
+                           selected_broadcast=b_cast_date,
+                           version='20.03.1 (alpha)',
                            chat_messages=chat_messages,
                            current_program=current_program)
 

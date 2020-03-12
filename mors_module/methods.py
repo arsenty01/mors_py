@@ -28,13 +28,22 @@ def get_schedule_by_date(date: datetime):
     :param date: дата
     :return: Расписание
     """
-    bobj = Broadcast.query.filter(Broadcast.date == date).first()
-    schedule = Program.query.filter(Program.broadcast_id == bobj.id).all()
+
+    # TODO Поправить этот костыль
+    bobjs = Broadcast.query.all()
+    bobj = None
     programs_json = []
-    for item in schedule:
-        programs_json.append({
-            'title': item.title,
-            'hosts': item.hosts,
-            'time': item.time
-        })
+
+    for item in bobjs:
+        if item.date == date:
+            bobj = item
+            break
+    if bobj:
+        schedule = Program.query.filter(Program.broadcast_id == bobj.id).all()
+        for item in schedule:
+            programs_json.append({
+                'title': item.title,
+                'hosts': item.hosts,
+                'time': item.time
+            })
     return programs_json

@@ -29,7 +29,7 @@
                         <span class="special-date">
                             <select>
                                 {% for broadcast in broadcasts %}
-                                    <option>{{ broadcast.date.strftime('%d.%m.%Y') }}</option>
+                                    <option {% if broadcast.date == selected_broadcast %} selected {% endif %}>{{ broadcast.date.strftime('%d.%m.%Y') }}</option>
                                 {% endfor %}
                             </select>
                         </span>
