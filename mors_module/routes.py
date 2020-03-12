@@ -1,7 +1,6 @@
 from mors_module import application, socketio
-from mors_module import db
 from mors_module.currently_playing import *
-from mors_module.models import ChatMessages, Program, Broadcast
+from mors_module.methods import *
 from flask import render_template
 from flask_socketio import emit
 from datetime import datetime
@@ -13,9 +12,12 @@ def index():
     cp_obj = CurrentlyPlaying()
     current_program = cp_obj.now_playing()
     broadcasts = Broadcast.query.all()
-    # todo костыль
-    schedule = Program.query.filter(Broadcast.date == '26.01.2020').all()
+    b_cast_date = get_next_or_last_broadcast(datetime.today())
+    schedule = get_schedule_by_date(b_cast_date)
     chat_messages = ChatMessages.query.order_by(ChatMessages.id.desc()).limit(20)
+
+    print('broadcasts', broadcasts)
+    print('schedule', schedule)
 
     return render_template('main_page.html',
                            schedule=schedule,
@@ -33,7 +35,7 @@ def get_messages(message):
     emit('new_message', {
         'author': message['author'],
         'text': message['text'],
-        'timestamp': msg.timestamp.strftime("%d.%m.%Y, %H:%M:%S")
+        'timestamp': msg.timestamp.strftime('%d.%m.%Y, %H:%M:%S')
     }, broadcast=True)
 
 
@@ -45,14 +47,6 @@ def currently_playing():
 
 @socketio.on('refresh_schedule')
 def refresh_schedule(date):
-    broadcast = Broadcast.query.filter(Broadcast.date == date).first().id
-    schedule = Program.query.filter(Program.broadcast_id == broadcast).all()
-    print(schedule)
-    programs_json = []
-    for item in schedule:
-        programs_json.append({
-            'title': item.title,
-            'hosts': item.hosts,
-            'time': item.time
-        })
-    emit('new_schedule', programs_json)
+    date_dt = datetime.strptime(date, '%d.%m.%Y')
+    schedule = get_schedule_by_date(date_dt)
+    emit('new_schedule', schedule)
