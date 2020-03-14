@@ -24,19 +24,20 @@
          <div id="content-body-1line">
             <div id="time-table">
 
-                {% if schedule %}
-
                 <div id="tt-header">
                     <h2>эфир
                         <span class="special-date">
                             <select>
                                 {% for broadcast in broadcasts %}
-                                    <option>{{ broadcast.date }}</option>
+                                    <option {% if broadcast.date == selected_broadcast %} selected {% endif %}>{{ broadcast.date.strftime('%d.%m.%Y') }}</option>
                                 {% endfor %}
                             </select>
                         </span>
                     </h2>
                 </div>
+
+                {% if schedule %}
+
                 <div id="tt-body">
 
                     {% for program in schedule %}
@@ -60,7 +61,7 @@
                 </div>
                 {% else %}
 
-                <h3>Расписание не загружено!</h3>
+                <h3>Расписание отсутствует</h3>
 
                 {% endif %}
             </div>

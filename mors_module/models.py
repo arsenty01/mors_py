@@ -1,6 +1,5 @@
 from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
-
 from mors_module import db, login_manager
 
 
@@ -27,7 +26,7 @@ class Program(db.Model):
 
 class Broadcast(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    date = db.Column(db.String(10))
+    date = db.Column(db.DateTime)
 
     def __repr__(self):
         return '<Broadcast {}>'.format(self.date)
@@ -68,4 +67,4 @@ class User(db.Model, UserMixin):
 
 @login_manager.user_loader
 def load_user(uid):
-    return  User.query.get(int(uid))
+    return User.query.get(int(uid))
