@@ -4,6 +4,7 @@ from mors_module.methods import *
 from flask import render_template
 from flask_socketio import emit
 from datetime import datetime
+import time
 
 
 @application.route('/')
@@ -40,7 +41,7 @@ def get_messages(message):
 @socketio.on('cp_request')
 def currently_playing():
     cp_obj = CurrentlyPlaying()
-    emit('cp_response', cp_obj.now_playing())
+    emit('cp_response', cp_obj.now_playing(), broadcast=True)
 
 
 @socketio.on('refresh_schedule')
